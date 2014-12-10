@@ -47,9 +47,9 @@ if [ "$oldrev" = "$zero" ]; then
 fi
 
 for rev in $(git rev-list --reverse $newrev --not $oldrev); do
-	biggest_file=$(git ls-tree --full-tree -r -l $rev | sort -k 4 -n -r | head -1 | awk '{print $5,$4}')
-	filename=$(echo $biggest_file | cut -d ' ' -f1)
-	filesize=$(echo $biggest_file | cut -d ' ' -f2)
+	biggest_file=$(git ls-tree --full-tree -r -l $rev | sort -k 4 -n -r | head -1 | awk '{for(i=4;i<=NF;i++) {printf $i " "}}')
+	filename=$(echo $biggest_file | cut -d ' ' -f2-)
+	filesize=$(echo $biggest_file | cut -d ' ' -f1)
 
 	if [ $filesize -gt $maxfilesize ]; then
 		echo "*** Creating files bigger than $maxfilesize bytes is not allowed in this repository" >&2
